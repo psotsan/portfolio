@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'portapp',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -163,14 +164,35 @@ LOGGING = {
 }
 
 # =============================================================================
-# STATIC
+# STATIC FILES — S3
 # =============================================================================
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+if env.bool("USE_S3", default=False):
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+        },
+    }
+
+    AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+    AWS_S3_REGION_NAME = env("AWS_S3_REGION_NAME", default="eu-south-1")
+    AWS_S3_CUSTOM_DOMAIN = env(
+        "AWS_S3_CUSTOM_DOMAIN",
+        default=f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com",
+    )
+    AWS_S3_OBJECT_PARAMETERS = {
+        "CacheControl": "max-age=86400",
+    }
+
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
+else:
+    STATIC_URL = "static/"
+    STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # =============================================================================
 # MISC
