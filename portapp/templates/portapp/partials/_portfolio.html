@@ -1,0 +1,26 @@
+<h2><i class="bi bi-briefcase-fill text-primary me-2"></i>
+  {{ section.title }}</h2>
+<p>{{ section.description }}</p>
+<div class="row">
+  {% for project in section.projects %}
+  <div class="col-md-6 mb-3">
+    <div class="card h-100 border-primary">
+      <div class="card-body">
+        <h5 class="card-title">{{ project.title }}</h5>
+        <p class="card-text">{{ project.short_desc }}</p>
+        <p>
+          {% for tag in project.tags %}
+          <span class="badge bg-secondary me-1">{{ tag }}</span>
+          {% endfor %}
+        </p>
+        <a href="{% url 'project_detail' project.id %}"
+           class="btn btn-sm btn-outline-primary">
+          Ver detalle
+        </a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p class="text-muted">Pr&oacute;ximamente...</p>
+  {% endfor %}
+</div>

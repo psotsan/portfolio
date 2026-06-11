@@ -1,0 +1,19 @@
+<h2><i class="bi bi-gear-fill text-primary me-2"></i>
+  {{ section.title }}</h2>
+<div class="row">
+  {% for category in section.categories %}
+  <div class="col-md-4 mb-3">
+    <div class="card h-100 border-0 bg-light">
+      <div class="card-body">
+        <h5 class="card-title">{{ category.name }}</h5>
+        <ul class="list-unstyled mb-0">
+          {% for skill in category.items %}
+          <li><i class="bi bi-check-circle text-success me-1">
+          </i>{{ skill }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>

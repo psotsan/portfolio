@@ -1,0 +1,17 @@
+{% extends "portapp/base.html" %}
+{% block title %}{{ data.title }}{% endblock %}
+{% block content %}
+<div class="card shadow-sm border-0">
+  <div class="card-body px-5 py-5">
+    <h2><i class="bi bi-person-fill text-primary me-2"></i>
+      {{ data.title }}</h2>
+    <p class="lead">{{ data.summary }}</p>
+    <dl class="row mt-4">
+      {% for item in data.details %}
+      <dt class="col-sm-3">{{ item.label }}</dt>
+      <dd class="col-sm-9">{{ item.value }}</dd>
+      {% endfor %}
+    </dl>
+  </div>
+</div>
+{% endblock %}

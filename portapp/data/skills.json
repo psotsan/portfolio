@@ -1,0 +1,17 @@
+{
+  "title": "Habilidades técnicas",
+  "categories": [
+    {
+      "name": "Lenguajes",
+      "items": ["Python", "JavaScript", "TypeScript", "SQL"]
+    },
+    {
+      "name": "Frameworks",
+      "items": ["Django", "Flask", "React", "Vue.js"]
+    },
+    {
+      "name": "Herramientas",
+      "items": ["Git", "Docker", "Linux", "AWS"]
+    }
+  ]
+}

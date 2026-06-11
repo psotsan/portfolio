@@ -1,0 +1,14 @@
+{
+  "title": "Bienvenido a mi Portfolio",
+  "subtitle": "Desarrollador de software apasionado por la tecnolog\u00eda",
+  "greeting": "Hola, soy",
+  "name": "Tu Nombre",
+  "role": "Desarrollador Full Stack",
+  "description": "Construyo aplicaciones web modernas y eficientes.",
+  "links": {
+    "github": "https://github.com/tuusuario",
+    "linkedin": "https://linkedin.com/in/tuusuario",
+    "email": "tu@email.com"
+  },
+  "cv_filename": "CV_PSS.pdf"
+}

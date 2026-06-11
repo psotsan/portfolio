@@ -1,0 +1,51 @@
+{% extends "portapp/base.html" %}
+{% block title %}{{ data.title }}{% endblock %}
+{% block content %}
+<div class="card shadow-sm border-0">
+  <div class="card-body px-5 py-5">
+    <h2><i class="bi bi-book-fill text-primary me-2"></i>
+      {{ data.title }}</h2>
+    {% for item in data.items %}
+    <div class="card mb-3 border-0 bg-light">
+      <div class="card-body">
+        <h5 class="card-title">{{ item.degree }}</h5>
+        <h6 class="card-subtitle text-muted">
+          {{ item.institution }} &mdash; {{ item.period }}
+        </h6>
+        <p class="card-text mt-2">{{ item.description }}</p>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-muted">Sin formaci&oacute;n registrada.</p>
+    {% endfor %}
+
+    {% if data.certifications %}
+    <hr>
+    <h3 class="mt-4">
+      <i class="bi bi-patch-check-fill text-warning me-2"></i>
+      Certificaciones</h3>
+    <div class="row mt-3">
+      {% for cert in data.certifications %}
+      <div class="col-md-6 mb-3">
+        <div class="card h-100 border-0 bg-light">
+          <div class="card-body">
+            <h5 class="card-title">{{ cert.title }}</h5>
+            <h6 class="card-subtitle text-muted">
+              {{ cert.issuer }} &mdash; {{ cert.year }}
+            </h6>
+            {% if cert.credential_url %}
+            <a href="{{ cert.credential_url }}"
+               class="btn btn-sm btn-outline-warning mt-2" target="_blank"
+               rel="noopener">
+              <i class="bi bi-box-arrow-up-right me-1"></i>Ver credencial
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

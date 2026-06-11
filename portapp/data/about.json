@@ -1,0 +1,9 @@
+{
+  "title": "Sobre mí",
+  "summary": "Soy un desarrollador con experiencia en construir aplicaciones web escalables. Me apasiona el código limpio, las buenas prácticas y el aprendizaje continuo.",
+  "details": [
+    {"label": "Nombre", "value": "Tu Nombre"},
+    {"label": "Ubicación", "value": "Ciudad, País"},
+    {"label": "Idiomas", "value": "Español (nativo), Inglés (avanzado)"}
+  ]
+}

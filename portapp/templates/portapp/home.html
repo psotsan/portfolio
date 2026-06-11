@@ -1,0 +1,95 @@
+{% extends "portapp/base.html" %}
+{% load static %}
+{% block title %}Mi Portfolio - Inicio{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2 class="mb-0">
+    <i class="bi bi-images me-2"></i>Presentaci&oacute;n
+  </h2>
+  <button id="btnTogglePlay" class="btn btn-outline-primary"
+          title="Pausar / Reanudar carrusel">
+    <i class="bi bi-pause-fill" id="iconPlay"></i>
+    <span id="txtPlay">Pausar</span>
+  </button>
+</div>
+
+<div id="carouselPortfolio" class="carousel slide" data-bs-ride="carousel"
+     data-bs-interval="5000">
+  <div class="carousel-indicators">
+    {% for section in sections %}
+    <button type="button" data-bs-target="#carouselPortfolio"
+            data-bs-slide-to="{{ forloop.counter0 }}"
+            class="{% if forloop.first %}active{% endif %}"
+            aria-label="Slide {{ forloop.counter }}"
+            aria-current="{% if forloop.first %}true{% endif %}">
+    </button>
+    {% endfor %}
+  </div>
+
+  <div class="carousel-inner">
+    {% for section in sections %}
+    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+      <div class="card shadow-sm border-0">
+        <div class="card-body px-5 py-5">
+          {% include "portapp/partials/_"|add:section.slug|add:".html" %}
+        </div>
+      </div>
+    </div>
+              {% endfor %}
+            </div>
+
+  <button class="carousel-control-prev" type="button"
+          data-bs-target="#carouselPortfolio" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Anterior</span>
+  </button>
+  <button class="carousel-control-next" type="button"
+          data-bs-target="#carouselPortfolio" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Siguiente</span>
+  </button>
+</div>
+
+<style>
+  .carousel-control-prev,
+  .carousel-control-next {
+    z-index: 1;
+  }
+  .carousel-inner {
+    z-index: 2;
+    position: relative;
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var el = document.getElementById('carouselPortfolio');
+  var btn = document.getElementById('btnTogglePlay');
+  var icon = document.getElementById('iconPlay');
+  var txt = document.getElementById('txtPlay');
+  var playing = true;
+  if (el && btn && typeof bootstrap !== 'undefined') {
+    var carousel = new bootstrap.Carousel(el, {
+      interval: 5000,
+      ride: 'carousel'
+    });
+    btn.addEventListener('click', function() {
+      if (playing) {
+        carousel.pause();
+        icon.className = 'bi bi-play-fill';
+        txt.textContent = 'Reanudar';
+        playing = false;
+      } else {
+        carousel.cycle();
+        icon.className = 'bi bi-pause-fill';
+        txt.textContent = 'Pausar';
+        playing = true;
+      }
+    });
+  }
+});
+</script>
+
+{% endblock %}
+

@@ -1,0 +1,29 @@
+{% extends "portapp/base.html" %}
+{% block title %}{{ project.title }}{% endblock %}
+{% block content %}
+<div class="card shadow-sm border-0">
+  <div class="card-body px-5 py-5">
+    {% if project %}
+    <h2><i class="bi bi-briefcase-fill text-primary me-2"></i>
+      {{ project.title }}</h2>
+    <p>{{ project.description }}</p>
+    <p>
+      {% for tag in project.tags %}
+      <span class="badge bg-secondary me-1">{{ tag }}</span>
+      {% endfor %}
+    </p>
+    <a href="{{ project.url }}" class="btn btn-primary">
+      <i class="bi bi-box-arrow-up-right me-1"></i>Ver proyecto
+    </a>
+    {% else %}
+    <h2>Proyecto no encontrado</h2>
+    <p>El proyecto solicitado no existe.</p>
+    {% endif %}
+    <div class="mt-4">
+      <a href="{% url 'portfolio_list' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i>Volver al portfolio
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

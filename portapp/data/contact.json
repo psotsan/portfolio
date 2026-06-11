@@ -1,0 +1,12 @@
+{
+  "title": "Contacto",
+  "subtitle": "No dudes en escribirme",
+  "email": "{{ PERSONAL_EMAIL }}",
+  "phone": "+34 600 000 000",
+  "social": {
+    "github": "{{ PERSONAL_GITHUB }}",
+    "linkedin": "{{ PERSONAL_LINKEDIN }}",
+    "twitter": "https://twitter.com/tuusuario"
+  }
+}
+

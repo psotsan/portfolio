@@ -1,0 +1,19 @@
+{
+  "title": "Experiencia laboral",
+  "items": [
+    {
+      "company": "Empresa XYZ",
+      "role": "Desarrollador Senior",
+      "period": "Ene 2022 - Presente",
+      "description": "Lideré el desarrollo de la plataforma principal usando Django y React.",
+      "tech": ["Django", "React", "Docker"]
+    },
+    {
+      "company": "Empresa ABC",
+      "role": "Desarrollador Full Stack",
+      "period": "Mar 2020 - Dic 2021",
+      "description": "Desarrollé y mantuve aplicaciones web internas.",
+      "tech": ["Python", "Flask", "Vue.js"]
+    }
+  ]
+}

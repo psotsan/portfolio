@@ -1,0 +1,31 @@
+{
+  "title": "Formación académica",
+  "items": [
+    {
+      "institution": "Universidad de ...",
+      "degree": "Ingeniería Informática",
+      "period": "2015 - 2020",
+      "description": "Especialización en desarrollo de software."
+    },
+    {
+      "institution": "Plataforma Online",
+      "degree": "Curso avanzado de Django",
+      "period": "2021",
+      "description": "Arquitecturas limpias y APIs REST."
+    }
+  ],
+  "certifications": [
+    {
+      "title": "AWS Certified Solutions Architect",
+      "issuer": "Amazon Web Services",
+      "year": "2023",
+      "credential_url": "https://aws.amazon.com/certification/"
+    },
+    {
+      "title": "Scrum Master Professional",
+      "issuer": "Scrum.org",
+      "year": "2022",
+      "credential_url": "https://www.scrum.org/"
+    }
+  ]
+}

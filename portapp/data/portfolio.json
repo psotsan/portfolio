@@ -1,0 +1,24 @@
+{
+  "title": "Portfolio",
+  "description": "Algunos de los proyectos en los que he trabajado.",
+  "projects": [
+    {
+      "id": 1,
+      "title": "Proyecto 1",
+      "short_desc": "Breve descripción del proyecto uno.",
+      "description": "Descripción detallada del proyecto uno. Tecnologías usadas y resultados obtenidos.",
+      "image": "proyecto1.png",
+      "url": "https://github.com/tuusuario/proyecto1",
+      "tags": ["Python", "Django", "PostgreSQL"]
+    },
+    {
+      "id": 2,
+      "title": "Proyecto 2",
+      "short_desc": "Breve descripción del proyecto dos.",
+      "description": "Descripción detallada del proyecto dos.",
+      "image": "proyecto2.png",
+      "url": "https://github.com/tuusuario/proyecto2",
+      "tags": ["JavaScript", "React", "Node.js"]
+    }
+  ]
+}
