@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 
 from django.conf import settings
-from django.http import FileResponse, Http404
+from django.http import FileResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
 
 _ALLOWED_JSON_FILES = frozenset({
@@ -125,15 +125,6 @@ def download_cv(request):
     cv_fn = Path(cv_fn).name
     if not re.match(r'^[\w\-. ]+$', cv_fn):
         cv_fn = "CV_PSS.pdf"
-    pdf_path = Path(settings.BASE_DIR) / "static" / cv_fn
-    if not pdf_path.exists():
-        raise Http404("CV no encontrado")
-    # Use a context manager so the file descriptor is always closed,
-    # even if an exception occurs before FileResponse processes it.
-    with open(pdf_path, "rb") as f:
-        return FileResponse(
-            f,
-            as_attachment=True,
-            filename=cv_fn,
-            content_type="application/pdf",
-        )
+    static_url = settings.STATIC_URL.rstrip("/")
+    pdf_url = f"{static_url}/{cv_fn}"
+    return HttpResponseRedirect(pdf_url)
