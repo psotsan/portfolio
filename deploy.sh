@@ -76,7 +76,7 @@ write_env() {
   done
 
   printf "%s" "$env_content" > ~/.env
-  echo "[OK] .env creado en ~/.env"
+  echo "[OK] .env create in ~/.env"
 }
 
 # ------------------ main ------------------
@@ -117,17 +117,21 @@ WantedBy=multi-user.target
 EOF
 
 sudo systemctl enable --now gunicorn
+sleep 2
 
 DJANGO_ALLOWED_HOSTS=$(grep "^DJANGO_ALLOWED_HOSTS=" ~/.env | cut -d'=' -f2-)
 FIRST_HOST="${DJANGO_ALLOWED_HOSTS%%,*}"
 FIRST_HOST="${FIRST_HOST%% *}"
-curl --unix-socket /home/ubuntu/portfolio/portfolio.sock \
-  -H "Host: ${FIRST_HOST}" http://localhost/
+SECOND_HOST="${DJANGO_ALLOWED_HOSTS#*,}"
+SECOND_HOST="${SECOND_HOST## }"
+SECOND_HOST="${SECOND_HOST%%,*}"
+SECOND_HOST="${SECOND_HOST%% *}"
+curl --unix-socket /home/ubuntu/portfolio/portfolio.sock -H "Host: ${FIRST_HOST}" http://localhost/
 
 sudo tee /etc/nginx/sites-available/portfolio > /dev/null << EOF
 server {
 	listen 80;
-    server_name ${FIRST_HOST};
+    server_name "${FIRST_HOST}" "${SECOND_HOST}";
 	location /static/ {
         proxy_pass https://$(grep "^AWS_STORAGE_BUCKET_NAME=" ~/.env | cut -d'=' -f2- | tr -d "'").s3.$(grep "^AWS_S3_REGION_NAME=" ~/.env | cut -d'=' -f2- | tr -d "'").amazonaws.com/;
 }
@@ -154,18 +158,9 @@ sudo ufw --force enable
 sudo ufw status
 
 DJANGO_ALLOWED_HOSTS=$(grep "^DJANGO_ALLOWED_HOSTS=" ~/.env | cut -d'=' -f2-)
-SECOND_HOST="${DJANGO_ALLOWED_HOSTS#*,}"
-SECOND_HOST="${SECOND_HOST## }"
-SECOND_HOST="${SECOND_HOST%%,*}"
-SECOND_HOST="${SECOND_HOST%% *}"
-sudo certbot --nginx \
-  -d "${FIRST_HOST}" \
-  -d "${SECOND_HOST}" \
-  --non-interactive \
-  --agree-tos \
-  --email "$(grep "^PERSONAL_EMAIL=" ~/.env | cut -d'=' -f2- | tr -d "'")" \
-  --redirect
+
+sudo certbot --nginx -d "${FIRST_HOST}" -d "${SECOND_HOST}" --non-interactive --agree-tos --email "$(grep "^PERSONAL_EMAIL=" ~/.env | cut -d'=' -f2- | tr -d "'")" --redirect
 sudo certbot renew --dry-run
 
-curl -I https://midominio.com
-curl -I https://www.midominio.com
+curl -I https://"${FIRST_HOST}"
+curl -I https://"${SECOND_HOST}"
