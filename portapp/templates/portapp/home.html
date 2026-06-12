@@ -7,11 +7,6 @@
   <h2 class="mb-0">
     <i class="bi bi-images me-2"></i>Presentaci&oacute;n
   </h2>
-  <button id="btnTogglePlay" class="btn btn-outline-primary"
-          title="Pausar / Reanudar carrusel">
-    <i class="bi bi-pause-fill" id="iconPlay"></i>
-    <span id="txtPlay">Pausar</span>
-  </button>
 </div>
 
 <div id="carouselPortfolio" class="carousel slide" data-bs-ride="carousel"
@@ -62,34 +57,6 @@
   }
 </style>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  var el = document.getElementById('carouselPortfolio');
-  var btn = document.getElementById('btnTogglePlay');
-  var icon = document.getElementById('iconPlay');
-  var txt = document.getElementById('txtPlay');
-  var playing = true;
-  if (el && btn && typeof bootstrap !== 'undefined') {
-    var carousel = new bootstrap.Carousel(el, {
-      interval: 5000,
-      ride: 'carousel'
-    });
-    btn.addEventListener('click', function() {
-      if (playing) {
-        carousel.pause();
-        icon.className = 'bi bi-play-fill';
-        txt.textContent = 'Reanudar';
-        playing = false;
-      } else {
-        carousel.cycle();
-        icon.className = 'bi bi-pause-fill';
-        txt.textContent = 'Pausar';
-        playing = true;
-      }
-    });
-  }
-});
-</script>
 
 {% endblock %}
 
