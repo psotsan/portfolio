@@ -1,0 +1,10 @@
+bind = 'unix:/home/ubuntu/portfolio/portfolio.sock'
+workers = 3  # (2 * num_cores) + 1
+worker_class = 'sync'
+timeout = 120
+keepalive = 5
+max_requests = 1000
+max_requests_jitter = 50
+accesslog = '/var/log/gunicorn/access.log'
+errorlog = '/var/log/gunicorn/error.log'
+loglevel = 'info'
