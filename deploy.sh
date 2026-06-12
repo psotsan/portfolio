@@ -117,8 +117,8 @@ WantedBy=multi-user.target
 EOF
 
 sudo systemctl enable --now gunicorn
-sudo systemctl status gunicorn
 
+DJANGO_ALLOWED_HOSTS=$(grep "^DJANGO_ALLOWED_HOSTS=" ~/.env | cut -d'=' -f2-)
 FIRST_HOST="${DJANGO_ALLOWED_HOSTS%%,*}"
 FIRST_HOST="${FIRST_HOST%% *}"
 curl --unix-socket /home/ubuntu/portfolio/portfolio.sock \
@@ -129,7 +129,7 @@ server {
 	listen 80;
     server_name ${FIRST_HOST};
 	location /static/ {
-        proxy_pass https://${AWS_STORAGE_BUCKET_NAME}.s3.${AWS_S3_REGION_NAME}.amazonaws.com/;
+        proxy_pass https://$(grep "^AWS_STORAGE_BUCKET_NAME=" ~/.env | cut -d'=' -f2- | tr -d "'").s3.$(grep "^AWS_S3_REGION_NAME=" ~/.env | cut -d'=' -f2- | tr -d "'").amazonaws.com/;
 }
 location / {
 	include proxy_params;
@@ -153,6 +153,7 @@ sudo ufw allow 443/tcp
 sudo ufw --force enable
 sudo ufw status
 
+DJANGO_ALLOWED_HOSTS=$(grep "^DJANGO_ALLOWED_HOSTS=" ~/.env | cut -d'=' -f2-)
 SECOND_HOST="${DJANGO_ALLOWED_HOSTS#*,}"
 SECOND_HOST="${SECOND_HOST## }"
 SECOND_HOST="${SECOND_HOST%%,*}"
@@ -162,9 +163,8 @@ sudo certbot --nginx \
   -d "${SECOND_HOST}" \
   --non-interactive \
   --agree-tos \
-  --email "${PERSONAL_EMAIL}" \
+  --email "$(grep "^PERSONAL_EMAIL=" ~/.env | cut -d'=' -f2- | tr -d "'")" \
   --redirect
-sudo cat /etc/nginx/sites-available/portfolio
 sudo certbot renew --dry-run
 
 curl -I https://midominio.com
