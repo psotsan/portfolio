@@ -49,7 +49,7 @@ write_env() {
     while true; do
       read -r -p "  ${var}: " val
       [ -n "$val" ] && break
-      echo "  [WARN] no puede estar vacio"
+      echo "  [WARN] cannot be empty"
     done
     if [ "$var" = "DJANGO_ALLOWED_HOSTS" ]; then
       env_content+="${var}=${val}"$'\n'
@@ -64,13 +64,13 @@ write_env() {
   env_content+="CSRF_COOKIE_SECURE=True"$'\n'
 
   echo ""
-  echo "--- Superusuario Django ---"
-  echo "(se guardara en .env para referencia)"
+  echo "--- Django Superuser ---"
+  echo "(saved as .env)"
   for var in "${SUPERUSER_VARS[@]}"; do
     while true; do
       read -r -p "  ${var}: " val
       [ -n "$val" ] && break
-      echo "  [WARN] no puede estar vacio"
+      echo "  [WARN] cannot be empty"
     done
     env_content+="${var}='${val}'"$'\n'
   done
