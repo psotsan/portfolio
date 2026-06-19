@@ -137,19 +137,12 @@ phase2_configure_nginx() {
   server_name="${hosts[0]}"
   [ -n "${hosts[1]:-}" ] && server_name+=" ${hosts[1]}"
 
-  bucket=$(read_env_value "AWS_STORAGE_BUCKET_NAME")
-  region=$(read_env_value "AWS_S3_REGION_NAME")
-
   echo "[..] Configuring nginx for: ${server_name}"
 
   sudo tee /etc/nginx/sites-available/"$CONTAINER_NAME" > /dev/null << EOF
 server {
     listen 80;
     server_name ${server_name};
-
-    location /static/ {
-        return 301 https://${bucket}.s3.${region}.amazonaws.com/;
-    }
 
     location / {
         include proxy_params;
@@ -193,12 +186,16 @@ phase2_configure_ssl() {
   [ -n "$second_host" ] && certbot_domains+=" -d ${second_host}"
   email=$(read_env_value "PERSONAL_EMAIL")
 
-  echo "[..] Obtaining SSL certificate for: ${certbot_domains}"
+  if [ -d "/etc/letsencrypt/live/${first_host}" ]; then
+    echo "[..] SSL certificate already exists for ${first_host}, skipping issue."
+  else
+    echo "[..] Obtaining SSL certificate for: ${certbot_domains}"
 
-  sudo certbot --nginx ${certbot_domains} \
-    --non-interactive --agree-tos \
-    --email "$email" \
-    --redirect
+    sudo certbot --nginx ${certbot_domains} \
+      --non-interactive --agree-tos \
+      --email "$email" \
+      --redirect
+  fi
 
   sudo certbot renew --dry-run
 

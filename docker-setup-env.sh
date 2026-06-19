@@ -107,6 +107,7 @@ write_env() {
   env_content+="SECURE_SSL_REDIRECT=True"$'\n'
   env_content+="SESSION_COOKIE_SECURE=True"$'\n'
   env_content+="CSRF_COOKIE_SECURE=True"$'\n'
+  env_content+="USE_S3=True"$'\n'
 
   echo ""
   echo "--- Django Superuser ---"
