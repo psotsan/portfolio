@@ -52,32 +52,9 @@ portfolio/
 └── manage.py
 ```
 
-## Quick start
+## Deployment
 
-```bash
-# 1. Clone the repository
-git clone https://github.com/youruser/portfolio.git
-cd portfolio
-
-# 2. Create and activate a virtual environment
-python -m venv venv
-source venv/bin/activate
-
-# 3. Install dependencies
-pip install -r portfolio/requirements.txt
-
-# 4. Configure environment variables
-cp env.example .env
-# Then edit .env with your personal settings
-
-# 5. Place your CV as a PDF
-#     cp /path/to/your/CV.pdf static/CV_PSS.pdf
-
-# 6. Run the development server
-python manage.py runserver
-```
-
-Open [http://127.0.0.1:8000](http://127.0.0.1:8000) in your browser.
+Refer to [portfolio-deployment repository](https://github.com/psotsan/portfolio-deployment/) for deployment instructions
 
 ## Customisation
 
@@ -130,14 +107,11 @@ configured via the `.env` file:
 2. **Serve static files** — Use the reverse proxy or a CDN to serve
    `staticfiles/` (collected via `python manage.py collectstatic`).
 
-3. **Database** — Replace SQLite with PostgreSQL for better concurrency
-   and reliability in production.
-
-4. **Logging** — Configure Django's logging to send warnings and errors
+3. **Logging** — Configure Django's logging to send warnings and errors
    to a central monitoring system. The `AuditLogMiddleware` already logs
    CV downloads and 4xx/5xx responses via the `portapp` logger.
 
-5. **Monitor CV download** — The `/cv/` endpoint is logged by
+4. **Monitor CV download** — The `/cv/` endpoint is logged by
    `AuditLogMiddleware`. Review those logs periodically to detect
    unusual activity.
 
