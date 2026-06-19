@@ -183,7 +183,7 @@ if env.bool("USE_S3", default=False):
     AWS_S3_REGION_NAME = env("AWS_S3_REGION_NAME", default="eu-south-1")
     AWS_S3_CUSTOM_DOMAIN = env(
         "AWS_S3_CUSTOM_DOMAIN",
-        default=f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com",
+        default=f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com",
     )
     AWS_S3_OBJECT_PARAMETERS = {
         "CacheControl": "max-age=86400",
