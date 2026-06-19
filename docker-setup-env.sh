@@ -84,11 +84,7 @@ prompt_var() {
 format_var() {
   local var="$1"
   local val="$2"
-  if [ "$var" = "DJANGO_ALLOWED_HOSTS" ]; then
-    printf "%s=%s" "$var" "$val"
-  else
-    printf "%s='%s'" "$var" "$val"
-  fi
+  printf "%s=%s" "$var" "$val"
 }
 
 write_env() {
@@ -116,7 +112,11 @@ write_env() {
   echo "--- Django Superuser ---"
   for var in "${SUPERUSER_VARS[@]}"; do
     val=$(prompt_var "$var")
-    env_content+="$(format_var "$var" "$val")"$'\n'
+    if [ "$var" = "DJANGO_SUPERUSER_PASSWORD" ]; then
+      env_content+="${var}='${val}'"$'\n'
+    else
+      env_content+="${var}=${val}"$'\n'
+    fi
   done
 
   printf "%s" "$env_content" > "$ENV_FILE"
